@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panayappan L · Senior Frontend Developer</title>
+<meta name="description" content="Senior Frontend Developer with 6+ years building React and TypeScript products for US healthcare and enterprise clients. Leads frontend architecture, design systems, releases and AI-assisted engineering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  /* Apply saved theme before paint to avoid a flash */
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root {
+    --bg: #F3F6F8;
+    --surface: #FFFFFF;
+    --ink: #13233A;
+    --text: #3D4B5B;
+    --muted: #6A7786;
+    --rule: #D7DEE5;
+    --accent: #0A7680;
+    --accent-soft: #E0F0F1;
+    --signal: #A86E12;
+    --shadow: 0 1px 2px rgba(19, 35, 58, .06), 0 8px 24px rgba(19, 35, 58, .06);
+    --radius-lg: 18px;
+    --radius-sm: 8px;
+    --maxw: 1120px;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --code: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0C1520; --surface: #122031; --ink: #E7EDF3; --text: #C2CCD6; --muted: #8796A6;
+      --rule: #23364B; --accent: #5BC4CA; --accent-soft: #10303A; --signal: #E2AA4C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.25);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0C1520; --surface: #122031; --ink: #E7EDF3; --text: #C2CCD6; --muted: #8796A6;
+    --rule: #23364B; --accent: #5BC4CA; --accent-soft: #10303A; --signal: #E2AA4C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 400 17px/1.65 var(--body);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  code { font: 500 .88em var(--code); color: var(--ink); background: var(--accent-soft); padding: .1em .4em; border-radius: 5px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--accent); color: var(--surface); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 600px) { .wrap { padding: 0 16px; } body { font-size: 16px; } }
+
+  h1, h2, h3 { font-family: var(--display); color: var(--ink); margin: 0; letter-spacing: -.02em; }
+  h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); line-height: 1.1; font-weight: 600; }
+  h3 { font-size: 1.3rem; line-height: 1.25; font-weight: 600; }
+  p { margin: 0 0 1em; max-width: 68ch; }
+
+  /* ---------- Header ---------- */
+  .site-head {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid transparent; transition: border-color .2s ease;
+  }
+  .site-head.scrolled { border-bottom-color: var(--rule); }
+  .head-row { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { font: 600 1.05rem var(--display); color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+  .nav { display: flex; align-items: center; gap: 6px; }
+  .nav a.navlink { color: var(--text); text-decoration: none; font-size: .95rem; padding: 6px 10px; border-radius: 6px; }
+  .nav a.navlink:hover { color: var(--ink); background: var(--accent-soft); }
+  @media (max-width: 860px) { .nav a.navlink { display: none; } }
+  .icon-btn, .jump-btn {
+    font: 500 .9rem var(--body); color: var(--ink); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 999px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px;
+  }
+  .icon-btn { width: 38px; padding: 0; justify-content: center; }
+  .icon-btn:hover, .jump-btn:hover { border-color: var(--accent); }
+  .jump-btn kbd { font: 500 .75rem var(--code); color: var(--muted); border: 1px solid var(--rule); border-radius: 5px; padding: 1px 6px; }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .sun { display: none; }
+  :root[data-theme="dark"] .sun { display: block; } :root[data-theme="dark"] .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .sun { display: block; }
+    :root:not([data-theme="light"]) .moon { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 64px 0 72px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 56px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 44px; } .hero { padding-top: 40px; } }
+  .who { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%; flex: none; overflow: hidden;
+    background: var(--ink); color: var(--bg); display: grid; place-items: center;
+    font: 600 1.1rem var(--display); letter-spacing: .02em;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .who-name { font: 600 1.1rem var(--display); color: var(--ink); line-height: 1.2; }
+  .who-role { color: var(--muted); font-size: .95rem; }
+  .status { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; font-size: .85rem; color: var(--muted); }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: #2FA36B; box-shadow: 0 0 0 4px color-mix(in srgb, #2FA36B 22%, transparent); }
+  @media (max-width: 520px) { .status { display: none; } }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5.4vw, 4.1rem); line-height: 1.03; font-weight: 600; letter-spacing: -.035em;
+    max-width: 15ch; margin-bottom: 28px;
+  }
+  .lede { font-size: 1.12rem; color: var(--text); max-width: 54ch; margin-bottom: 32px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px;
+    border-radius: 999px; font: 600 .97rem var(--body); text-decoration: none; cursor: pointer;
+    border: 1px solid var(--rule); color: var(--ink); background: var(--surface);
+    transition: transform .15s ease, border-color .15s ease, background-color .15s ease;
+  }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn svg { width: 17px; height: 17px; }
+  .socials { display: flex; gap: 4px; margin-left: 4px; }
+  .socials a { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: var(--muted); }
+  .socials a:hover { color: var(--ink); background: var(--accent-soft); }
+  .socials svg { width: 20px; height: 20px; }
+
+  /* Pipeline: the signature element */
+  .pipeline {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-lg);
+    padding: 26px 26px 22px; box-shadow: var(--shadow);
+  }
+  .pipe-title { font: 600 1.05rem var(--display); color: var(--ink); margin-bottom: 4px; }
+  .pipe-sub { font-size: .9rem; color: var(--muted); margin-bottom: 18px; }
+  .stages { list-style: none; margin: 0; padding: 0; position: relative; }
+  .stages::before {
+    content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--rule);
+  }
+  .stages::after {
+    content: ""; position: absolute; left: 11px; top: 10px; width: 2px; height: calc(100% - 20px);
+    background: var(--accent); transform-origin: top; transform: scaleY(0);
+    animation: grow 2.6s cubic-bezier(.65,0,.35,1) .35s forwards;
+  }
+  .stage { position: relative; display: grid; grid-template-columns: 24px 1fr auto; gap: 14px; align-items: baseline; padding: 7px 0; }
+  .dot {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 2px solid var(--rule);
+    position: relative; z-index: 1; align-self: center; display: grid; place-items: center;
+    animation: light .3s ease forwards; animation-delay: calc(.35s + var(--i) * .27s);
+  }
+  .dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: transparent; animation: fill .3s ease forwards; animation-delay: inherit; }
+  .stage-name { color: var(--ink); font-weight: 500; font-size: .98rem; }
+  .stage-name code { font-size: .86em; }
+  .stage-note { color: var(--muted); font-size: .82rem; text-align: right; white-space: nowrap; }
+  .stage.env .stage-name { font-family: var(--code); font-weight: 400; font-size: .9rem; }
+  .stage.prod .stage-name { font-weight: 600; }
+  .pipe-foot { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: .88rem; color: var(--muted); }
+  .pipe-foot strong { color: var(--ink); font-weight: 600; }
+  @keyframes grow { to { transform: scaleY(1); } }
+  @keyframes light { to { border-color: var(--accent); } }
+  @keyframes fill { to { background: var(--accent); } }
+  @media (max-width: 420px) { .stage-note { display: none; } .stage { grid-template-columns: 24px 1fr; } }
+
+  /* ---------- Sections ---------- */
+  section { padding: 88px 0; border-top: 1px solid var(--rule); scroll-margin-top: 64px; }
+  @media (max-width: 600px) { section { padding: 64px 0; } }
+  .sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 40px; align-items: end; margin-bottom: 48px; }
+  .sec-head p { color: var(--muted); margin: 0; }
+  @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; gap: 14px; margin-bottom: 36px; } }
+
+  /* Results ledger */
+  .ledger { width: 100%; border-collapse: collapse; }
+  .ledger th, .ledger td { text-align: left; padding: 18px 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+  .ledger th { font-weight: 500; color: var(--ink); width: 40%; padding-right: 24px; }
+  .ledger td.val { font: 600 1.35rem var(--display); color: var(--ink); letter-spacing: -.01em; white-space: nowrap; padding-right: 24px; }
+  .ledger td.val .from { color: var(--muted); font-weight: 500; }
+  .ledger td.ctx { color: var(--muted); font-size: .92rem; text-align: right; }
+  @media (max-width: 760px) {
+    .ledger, .ledger tbody, .ledger tr, .ledger th, .ledger td { display: block; width: auto; }
+    .ledger tr { padding: 16px 0; border-bottom: 1px solid var(--rule); }
+    .ledger th, .ledger td { border: 0; padding: 2px 0; text-align: left; }
+    .ledger td.ctx { text-align: left; }
+  }
+
+  /* Ownership areas */
+  .areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); }
+  .area { padding: 30px 32px 30px 0; border-bottom: 1px solid var(--rule); }
+  .area:nth-child(odd) { border-right: 1px solid var(--rule); }
+  .area:nth-child(even) { padding-left: 32px; padding-right: 0; }
+  .area h3 { margin-bottom: 10px; }
+  .area p { margin: 0; color: var(--text); }
+  @media (max-width: 760px) {
+    .areas { grid-template-columns: 1fr; }
+    .area, .area:nth-child(even) { padding: 26px 0; border-right: 0; }
+  }
+
+  /* Case studies */
+  .cases { display: grid; gap: 14px; }
+  .case { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-lg); overflow: hidden; transition: border-color .2s ease; }
+  .case[open] { border-color: color-mix(in srgb, var(--accent) 45%, var(--rule)); }
+  .case summary {
+    list-style: none; cursor: pointer; padding: 26px 28px; display: grid;
+    grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center;
+  }
+  .case summary::-webkit-details-marker { display: none; }
+  .case summary:hover h3 { color: var(--accent); }
+  .case-where { font-size: .88rem; color: var(--muted); margin-bottom: 6px; }
+  .case-hook { color: var(--text); margin: 8px 0 0; font-size: .98rem; }
+  .case-result { text-align: right; }
+  .case-result b { display: block; font: 600 1.25rem var(--display); color: var(--ink); white-space: nowrap; }
+  .case-result span { font-size: .82rem; color: var(--muted); }
+  .chev { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--rule); display: grid; place-items: center; transition: transform .25s ease, background-color .2s ease; margin-left: auto; margin-top: 10px; }
+  .chev svg { width: 16px; height: 16px; color: var(--ink); }
+  .case[open] .chev { transform: rotate(180deg); background: var(--accent-soft); }
+  @media (max-width: 640px) {
+    .case summary { grid-template-columns: 1fr; padding: 22px 20px; }
+    .case-result { text-align: left; display: flex; align-items: center; gap: 12px; }
+    .chev { margin: 0 0 0 auto; }
+  }
+  .case-body { padding: 0 28px 30px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; }
+  .case[open] .case-body { animation: open .35s ease; }
+  @keyframes open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 860px) { .case-body { grid-template-columns: 1fr; gap: 24px; padding: 0 20px 24px; } }
+  .case-body h4 { font: 600 .95rem var(--display); color: var(--ink); margin: 0 0 6px; }
+  .case-body p, .case-body ul { font-size: .97rem; margin: 0 0 18px; }
+  .case-body ul { padding-left: 1.1em; }
+  .case-body li { margin-bottom: 6px; }
+  .case-body li::marker { color: var(--accent); }
+  .outcome { background: var(--accent-soft); border-radius: var(--radius-sm); padding: 14px 16px; font-size: .95rem; color: var(--ink); }
+  .note { font-size: .86rem; color: var(--muted); margin-top: 14px; }
+
+  /* Diagrams */
+  .diagram { background: var(--bg); border: 1px solid var(--rule); border-radius: 14px; padding: 22px; align-self: start; }
+  .diagram figcaption { font-size: .82rem; color: var(--muted); margin-top: 14px; }
+  .flow { display: flex; flex-direction: column; gap: 22px; align-items: stretch; }
+  .node {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px;
+    font-size: .9rem; color: var(--ink); position: relative; text-align: center;
+  }
+  .node small { display: block; color: var(--muted); font-size: .78rem; }
+  .node.key { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .flow > .node:not(:last-child)::after, .flow > .row:not(:last-child)::after {
+    content: ""; position: absolute; left: 50%; bottom: -17px; width: 1px; height: 12px; background: var(--muted);
+  }
+  .flow > .node:not(:last-child)::before, .flow > .row:not(:last-child)::before {
+    content: ""; position: absolute; left: calc(50% - 4px); bottom: -19px; border: 4px solid transparent; border-top-color: var(--muted);
+  }
+  .row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; position: relative; }
+  .row .node { padding: 9px 8px; font-size: .84rem; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tag { font-size: .72rem; color: var(--signal); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  /* Principles */
+  .principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px 56px; }
+  .principle h3 { margin-bottom: 10px; font-size: 1.25rem; }
+  .principle p { margin: 0; }
+  @media (max-width: 760px) { .principles { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* Timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 196px; top: 8px; bottom: 8px; width: 1px; background: var(--rule); }
+  .job { display: grid; grid-template-columns: 172px 1fr; gap: 48px; padding: 0 0 40px; position: relative; }
+  .job:last-child { padding-bottom: 0; }
+  .job::before {
+    content: ""; position: absolute; left: 191px; top: 8px; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--muted);
+  }
+  .job.current::before { border-color: var(--accent); background: var(--accent); }
+  .job-when { color: var(--muted); font-size: .92rem; padding-top: 2px; }
+  .job h3 { font-size: 1.2rem; }
+  .job-meta { color: var(--muted); font-size: .94rem; margin: 2px 0 10px; }
+  .job ul { margin: 0; padding-left: 1.1em; max-width: 70ch; }
+  .job li { margin-bottom: 6px; font-size: .97rem; }
+  .job li::marker { color: var(--accent); }
+  @media (max-width: 720px) {
+    .timeline::before { left: 5px; }
+    .job { grid-template-columns: 1fr; gap: 4px; padding-left: 30px; }
+    .job::before { left: 0; }
+  }
+
+  /* Toolbox */
+  .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 40px; }
+  .tools h3 { font-size: 1rem; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: .86rem; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 11px; }
+  .tools .feature .chip { border-color: color-mix(in srgb, var(--accent) 50%, var(--rule)); background: var(--accent-soft); }
+  @media (max-width: 900px) { .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .tools { grid-template-columns: 1fr; } }
+
+  .edu { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 140px 1fr; gap: 10px 24px; align-items: baseline; }
+  @media (max-width: 560px) { .edu { grid-template-columns: 1fr; gap: 2px; } .edu p { margin-bottom: 14px; } }
+  .edu h3 { font-size: 1rem; }
+  .edu p { margin: 0; color: var(--muted); }
+
+  /* Contact */
+  .contact { padding: 104px 0 56px; }
+  .contact h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 18ch; margin-bottom: 20px; letter-spacing: -.03em; }
+  .contact p { color: var(--muted); margin-bottom: 30px; }
+  .site-foot { padding: 28px 0 40px; border-top: 1px solid var(--rule); color: var(--muted); font-size: .88rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  /* Command palette */
+  .palette-backdrop { position: fixed; inset: 0; z-index: 50; background: rgba(8, 16, 26, .45); display: none; align-items: flex-start; justify-content: center; padding: 12vh 16px 16px; }
+  .palette-backdrop.open { display: flex; animation: fadeIn .15s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .palette { width: min(560px, 100%); background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,.25); overflow: hidden; animation: pop .18s ease; }
+  @keyframes pop { from { transform: translateY(-6px) scale(.985); opacity: 0; } to { transform: none; opacity: 1; } }
+  .palette input { width: 100%; border: 0; border-bottom: 1px solid var(--rule); background: transparent; color: var(--ink); font: 400 1.05rem var(--body); padding: 18px 20px; outline: none; }
+  .palette input::placeholder { color: var(--muted); }
+  .palette ul { list-style: none; margin: 0; padding: 8px; max-height: 340px; overflow-y: auto; }
+  .palette li { padding: 10px 12px; border-radius: 9px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; color: var(--ink); font-size: .95rem; }
+  .palette li span { color: var(--muted); font-size: .82rem; }
+  .palette li[aria-selected="true"] { background: var(--accent-soft); }
+  .palette .empty { color: var(--muted); padding: 14px 12px; cursor: default; }
+  .palette-foot { border-top: 1px solid var(--rule); padding: 9px 16px; font-size: .78rem; color: var(--muted); display: flex; gap: 16px; }
+
+  .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0; z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: .92rem; pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; transition-duration: .001ms !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<span id="top" aria-hidden="true"></span>
+
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#top">Panayappan L</a>
+    <nav class="nav" aria-label="Main">
+      <a class="navlink" href="#work">Case studies</a>
+      <a class="navlink" href="#leading">How I lead</a>
+      <a class="navlink" href="#experience">Experience</a>
+      <a class="navlink" href="#contact">Contact</a>
+      <button class="jump-btn" id="openPalette" type="button" aria-label="Open quick navigation">Jump to <kbd id="kbdHint">Ctrl K</kbd></button>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch colour theme">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="who">
+          <!-- To use your photo: replace the "PL" text with <img src="your-photo.jpg" alt="Panayappan L"> -->
+          <div class="avatar" aria-hidden="true">PL</div>
+          <div>
+            <div class="who-name">Panayappan L</div>
+            <div class="who-role">Senior Frontend Developer · India</div>
+          </div>
+          <span class="status"><i></i>Open to new opportunities</span>
+        </div>
+
+        <h1>I build frontend platforms that help teams ship faster.</h1>
+        <p class="lede">Senior Frontend Developer with 6+ years building React and TypeScript products for US healthcare and enterprise clients. I currently lead frontend work for EmmaCare, owning architecture, the design system, coding standards and releases, and I bring AI workflows with Claude Code, custom skills and MCP into everyday development.</p>
+
+        <div class="actions">
+          <!-- Keep resume.pdf in the same folder as this page. Visitors download it as Panayappan-L-Resume.pdf -->
+          <a class="btn primary" href="resume.pdf" download="Panayappan-L-Resume.pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+            Download resume
+          </a>
+          <a class="btn" href="mailto:panayappan.dev@gmail.com">Email me</a>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/panayappanl" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://github.com/panayappanl" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="pipeline" aria-label="How a ticket ships on my team">
+        <div class="pipe-title">How a ticket ships on my team</div>
+        <div class="pipe-sub">The workflow I designed and run, from Jira to production.</div>
+        <ol class="stages">
+          <li class="stage" style="--i:0"><span class="dot"></span><span class="stage-name">Jira ticket picked up</span><span class="stage-note">context</span></li>
+          <li class="stage" style="--i:1"><span class="dot"></span><span class="stage-name"><code>/start-ticket</code> skill</span><span class="stage-note">branch + plan</span></li>
+          <li class="stage" style="--i:2"><span class="dot"></span><span class="stage-name">MCP finds affected files</span><span class="stage-note">scope</span></li>
+          <li class="stage" style="--i:3"><span class="dot"></span><span class="stage-name">Build with design system</span><span class="stage-note">35+ components</span></li>
+          <li class="stage" style="--i:4"><span class="dot"></span><span class="stage-name">PR with AI code review</span><span class="stage-note">lint + CI gates</span></li>
+          <li class="stage env" style="--i:5"><span class="dot"></span><span class="stage-name">dev</span><span class="stage-note">preview</span></li>
+          <li class="stage env" style="--i:6"><span class="dot"></span><span class="stage-name">sandbox</span><span class="stage-note">integration</span></li>
+          <li class="stage env" style="--i:7"><span class="dot"></span><span class="stage-name">preprod</span><span class="stage-note">approval gate</span></li>
+          <li class="stage env prod" style="--i:8"><span class="dot"></span><span class="stage-name">production</span><span class="stage-note">released</span></li>
+        </ol>
+        <div class="pipe-foot"><strong>Two-week releases</strong>, with release prep cut from a full day to about 4 hours.</div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="results" aria-labelledby="results-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="results-h">Recent results</h2>
+        <p>Outcomes from the last three years, across EmmaCare and Emerson projects. Most are covered in the case studies below.</p>
+      </div>
+      <table class="ledger">
+        <tbody>
+          <tr><th scope="row">Release preparation time</th><td class="val"><span class="from">1 day</span> → ~4 hrs</td><td class="ctx">two-week releases, dev → sandbox → preprod → prod</td></tr>
+          <tr><th scope="row">API latency under peak load</th><td class="val"><span class="from">450ms</span> → 160ms</td><td class="ctx">2K+ requests/min, Redis caching</td></tr>
+          <tr><th scope="row">Mid-sprint requirement changes</th><td class="val"><span class="from">~5</span> → 1</td><td class="ctx">per sprint, after scoping with clients</td></tr>
+          <tr><th scope="row">Boilerplate removed</th><td class="val">~8K lines</td><td class="ctx">Redux to TanStack Query migration</td></tr>
+          <tr><th scope="row">Design system reach</th><td class="val">35+ <span class="from">components</span></td><td class="ctx">used across 3 products</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= WHAT I OWN ================= -->
+  <section id="own" aria-labelledby="own-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="own-h">What I own</h2>
+        <p>The parts of a frontend team that decide how fast and how safely it can move.</p>
+      </div>
+      <div class="areas">
+        <div class="area">
+          <h3>Architecture and standards</h3>
+          <p>Feature-based structure, TypeScript rules and lint configs for a 120K+ line codebase, enforced in CI so standards hold without reminders.</p>
+        </div>
+        <div class="area">
+          <h3>Design systems</h3>
+          <p>Tokens, accessible components and Storybook docs that turn UI work into assembly instead of reinvention.</p>
+        </div>
+        <div class="area">
+          <h3>Delivery and releases</h3>
+          <p>Environment configs, automated tests and approval gates from dev to production, plus estimates and demos with clients.</p>
+        </div>
+        <div class="area">
+          <h3>AI-assisted engineering</h3>
+          <p>Claude Code rules, team skills and MCP servers that give developers context and handle the repetitive parts of every ticket.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CASE STUDIES ================= -->
+  <section id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="work-h">Case studies</h2>
+        <p>How I approached the problems, the decisions I made and what changed. Client code and internal details are left out; diagrams are simplified.</p>
+      </div>
+
+      <div class="cases">
+
+        <!-- Case 1 -->
+        <details class="case" id="case-architecture" open>
+          <summary>
+            <div>
+              <div class="case-where">OpsXpress · EmmaCare</div>
+              <h3>Making standards stick in a 120K-line codebase</h3>
+              <p class="case-hook">Moving a growing React app to a feature-based structure, with rules that CI enforces instead of people.</p>
+            </div>
+            <div class="case-result"><b>Rules in CI</b><span>not in a wiki</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          </summary>
+          <div class="case-body">
+            <div>
+              <h4>The problem</h4>
+              <p>Ten engineers were adding code to a type-based layout (<code>components/</code>, <code>utils/</code>, <code>services/</code>). Related code lived far apart, features leaked into each other, and the same review comments came up on every PR.</p>
+              <h4>What I did</h4>
+              <ul>
+                <li>Reorganised the app by feature, each module owning its components, hooks, queries and tests.</li>
+                <li>Set strict TypeScript and shared ESLint rules, including import boundaries between features.</li>
+                <li>Turned the rules into CI checks so a PR that breaks them cannot merge.</li>
+                <li>Wrote the conventions into the Claude Code project rules, so AI-generated code follows them by default.</li>
+              </ul>
+              <h4>Trade-off</h4>
+              <p>A full restructure would have stalled feature work, so we moved one feature at a time, starting with the most active areas.</p>
+              <div class="outcome">Standards now hold without reminders, and reviews focus on logic and design instead of style and structure.</div>
+            </div>
+            <figure class="diagram" style="margin:0">
+              <div class="flow">
+                <div class="node">App shell and routing</div>
+                <div class="row">
+                  <div class="node key">features/orders<small>ui · hooks · queries</small></div>
+                  <div class="node key">features/billing<small>ui · hooks · queries</small></div>
+                </div>
+                <div class="split">
+                  <div class="node">Design system</div>
+                  <div class="node">Data layer<small>TanStack Query</small></div>
+                </div>
+              </div>
+              <figcaption>Features depend on shared layers, never on each other. ESLint enforces the arrows.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <!-- Case 2 -->
+        <details class="case" id="case-design-system">
+          <summary>
+            <div>
+              <div class="case-where">OpsXpress · EmmaCare</div>
+              <h3>A design system built from zero</h3>
+              <p class="case-hook">Replacing one-off styling with shared tokens and accessible components used by three products.</p>
+            </div>
+            <div class="case-result"><b>35+ components</b><span>across 3 products</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          </summary>
+          <div class="case-body">
+            <div>
+              <h4>The problem</h4>
+              <p>Every screen styled its own buttons, forms and tables. The products looked slightly different from each other, and simple UI changes had to be made in many places.</p>
+              <h4>What I did</h4>
+              <ul>
+                <li>Defined design tokens for colour, type and spacing with the design team.</li>
+                <li>Built accessible primitives first (inputs, buttons, dialogs), then composed forms, tables and layouts from them.</li>
+                <li>Documented every component in Storybook with usage examples.</li>
+                <li>Made the design system the default for all new UI, and moved older screens over as they were touched.</li>
+              </ul>
+              <h4>Trade-off</h4>
+              <p>I kept the first version small and opinionated. Fewer components with clear rules got adopted faster than a large library with many options.</p>
+              <div class="outcome">35+ components, used across 3 products serving multiple US healthcare providers.</div>
+            </div>
+            <figure class="diagram" style="margin:0">
+              <div class="flow">
+                <div class="node key">Design tokens<small>colour · type · spacing</small></div>
+                <div class="node">Primitives<small>button · input · dialog</small></div>
+                <div class="node">Patterns<small>forms · tables · layouts</small></div>
+                <div class="row">
+                  <div class="node">Product A</div>
+                  <div class="node">Product B</div>
+                  <div class="node">Product C</div>
+                </div>
+              </div>
+              <figcaption>One source of truth, three products. A token change updates every screen.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <!-- Case 3 -->
+        <details class="case" id="case-mcp">
+          <summary>
+            <div>
+              <div class="case-where">OpsXpress · AI workflows</div>
+              <h3>Giving developers domain knowledge through MCP</h3>
+              <p class="case-hook">Developers often picked up healthcare tickets without knowing the business rules behind them.</p>
+            </div>
+            <div class="case-result"><b>Context first</b><span>before code</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          </summary>
+          <div class="case-body">
+            <div>
+              <h4>The problem</h4>
+              <p>Healthcare workflows have rules that are not obvious from the code. Developers worked from the ticket alone, then went back to product managers with questions, or shipped something that missed an edge case.</p>
+              <h4>What I did</h4>
+              <ul>
+                <li>Built an MCP server that connects Claude Code to feature docs, business rules and past tickets.</li>
+                <li>Developers ask questions like "what happens when an appointment is cancelled?" while working, and get answers with links to the source.</li>
+                <li>Combined it with the <code>/start-ticket</code> skill, so each ticket starts with domain context, affected files and a draft plan.</li>
+                <li>Paired it with an impact tool that maps a change to the components and pages that depend on it, so developers know what to test.</li>
+              </ul>
+              <h4>Trade-off</h4>
+              <p>AI answers are only as good as the docs behind them. Keeping the source documents up to date became part of the definition of done.</p>
+              <div class="outcome">Fewer clarification loops with product managers, and new developers contribute to complex areas sooner.</div>
+              <!-- Replace with your GitHub link once the public demo is ready -->
+              <p class="note">A public demo with a sample clinic domain is in progress.</p>
+            </div>
+            <figure class="diagram" style="margin:0">
+              <div class="flow">
+                <div class="node">Developer in Claude Code</div>
+                <div class="node key">Domain MCP server</div>
+                <div class="row">
+                  <div class="node">Feature docs</div>
+                  <div class="node">Business rules</div>
+                  <div class="node">Past tickets</div>
+                </div>
+              </div>
+              <figcaption>The developer asks in plain language; the MCP server pulls the answer from the team's own sources.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <!-- Case 4 -->
+        <details class="case" id="case-data">
+          <summary>
+            <div>
+              <div class="case-where">OpsXpress · EmmaCare</div>
+              <h3>Redux to TanStack Query</h3>
+              <p class="case-hook">Separating server state from client state, and removing the code that existed only to fetch data.</p>
+            </div>
+            <div class="case-result"><b>~8K lines</b><span>of boilerplate removed</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          </summary>
+          <div class="case-body">
+            <div>
+              <h4>The problem</h4>
+              <p>Each API call needed action types, thunks, reducer cases and selectors. The same data was fetched repeatedly on the dashboard, and stale data was a common bug.</p>
+              <h4>What I did</h4>
+              <ul>
+                <li>Moved server data to TanStack Query and kept Redux only for true client state.</li>
+                <li>Introduced a query-key factory and a standard hook pattern per feature, like <code>useAppointmentsQuery</code>.</li>
+                <li>Used caching, request deduplication and targeted invalidation after mutations.</li>
+                <li>Migrated feature by feature, with old and new patterns running side by side.</li>
+              </ul>
+              <div class="outcome">~8K lines of boilerplate removed, and duplicate API calls on the main dashboard cut roughly in half.</div>
+            </div>
+            <figure class="diagram" style="margin:0">
+              <div class="flow">
+                <div class="split">
+                  <div class="node"><span class="tag">Before</span>action · thunk · reducer · selector</div>
+                  <div class="node key"><span class="tag">After</span>one query hook</div>
+                </div>
+                <div class="node">Shared query cache<small>dedupe · refetch · invalidate</small></div>
+                <div class="node">API</div>
+              </div>
+              <figcaption>One hook per endpoint replaces four layers of Redux code.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <!-- Case 5 -->
+        <details class="case" id="case-traffic">
+          <summary>
+            <div>
+              <div class="case-where">SLK Software · Emerson</div>
+              <h3>Keeping APIs fast at peak traffic</h3>
+              <p class="case-hook">Node.js APIs slowed down when traffic peaked, because every request went to the database.</p>
+            </div>
+            <div class="case-result"><b>450 → 160ms</b><span>at 2K+ requests/min</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          </summary>
+          <div class="case-body">
+            <div>
+              <h4>The problem</h4>
+              <p>At busy hours, response times climbed to around 450ms. Most requests asked for the same data that rarely changed.</p>
+              <h4>What I did</h4>
+              <ul>
+                <li>Profiled the busiest endpoints to find the read-heavy, rarely changing data.</li>
+                <li>Added a Redis cache in front of those reads, with expiry times matched to how often each data type changes.</li>
+                <li>Cleared the related cache entries on writes, so users never saw outdated data after an update.</li>
+              </ul>
+              <h4>Trade-off</h4>
+              <p>Caching everything would have been fast but risky. I only cached data where a short delay in freshness was acceptable.</p>
+              <div class="outcome">Latency dropped from 450ms to 160ms on APIs serving 2K+ requests per minute.</div>
+            </div>
+            <figure class="diagram" style="margin:0">
+              <div class="flow">
+                <div class="node">Client request</div>
+                <div class="node">Node.js API</div>
+                <div class="split">
+                  <div class="node key"><span class="tag">Cache hit</span>Redis</div>
+                  <div class="node"><span class="tag">Cache miss</span>Database, then cache</div>
+                </div>
+              </div>
+              <figcaption>Most peak-hour reads are served from Redis; writes clear the related keys.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW I LEAD ================= -->
+  <section id="leading" aria-labelledby="leading-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="leading-h">How I lead</h2>
+        <p>The habits behind the results above.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <h3>Standards live in tooling</h3>
+          <p>If a rule matters, CI checks it. Lint rules, type checks and AI review handle consistency, so people don't have to remember it.</p>
+        </div>
+        <div class="principle">
+          <h3>Reviews are for decisions</h3>
+          <p>Formatting and common mistakes are caught before a human looks. Code review time goes to design, edge cases and teaching.</p>
+        </div>
+        <div class="principle">
+          <h3>Context before code</h3>
+          <p>A developer who understands the business rule writes better code than one who only has the ticket. Domain knowledge should be one question away.</p>
+        </div>
+        <div class="principle">
+          <h3>Scope early with clients</h3>
+          <p>Most delivery problems start in the requirement call. Clear tickets and honest estimates up front cut mid-sprint changes from about five to one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="exp-h">Experience</h2>
+        <p>Six years, from frontend developer to leading frontend work for a US healthcare client.</p>
+      </div>
+      <ol class="timeline">
+        <li class="job current">
+          <div class="job-when">Jan 2026 – Present</div>
+          <div>
+            <h3>OpsXpress</h3>
+            <div class="job-meta">Sr. Frontend Developer · Client: EmmaCare</div>
+            <ul>
+              <li>Lead a team of 10 frontend engineers; set coding standards and a feature-based structure enforced through ESLint and CI.</li>
+              <li>Rolled out Claude Code with project rules, a <code>/start-ticket</code> skill, MCP tooling and AI code review on every PR.</li>
+              <li>Built the design system, migrated to TanStack Query and own two-week releases across four environments, cutting release prep from a full day to about 4 hours.</li>
+              <li>Frontend point of contact for the client: requirement calls, sprint demos and estimates.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <div class="job-when">Mar 2023 – Dec 2025</div>
+          <div>
+            <h3>SLK Software</h3>
+            <div class="job-meta">Senior Software Engineer · Client: Emerson</div>
+            <ul>
+              <li>Built a config-driven UI engine that renders screens from JSON schema, cutting build effort per screen by ~30%.</li>
+              <li>Added Redis caching for Node.js APIs at 2K+ requests/min, cutting latency from 450ms to 160ms.</li>
+              <li>Cut bundle size by 300KB and set up 120+ tests as a required CI check.</li>
+              <li>Led a 5-member team to build SLK's internal Employee Nomination System and mentored 2 junior developers.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <div class="job-when">Apr 2022 – Feb 2023</div>
+          <div>
+            <h3>Germantown Technologies</h3>
+            <div class="job-meta">Software Engineer</div>
+            <ul>
+              <li>Built the React UI for a hospital Patient Management System used across 5+ departments.</li>
+              <li>Optimised data-heavy patient screens and shipped updates every sprint through CI/CD.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <div class="job-when">Jun 2020 – Mar 2022</div>
+          <div>
+            <h3>QPI Cloud</h3>
+            <div class="job-meta">Application Developer · via Hackowls Software</div>
+            <ul>
+              <li>Improved live comment performance through smarter API polling and fewer DOM updates.</li>
+              <li>Built retry and cancel logic for key API calls, and reduced redundant calls by 30%.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= TOOLBOX ================= -->
+  <section id="toolbox" aria-labelledby="tools-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="tools-h">Toolbox</h2>
+        <p>What I use day to day, grouped by the job it does.</p>
+      </div>
+      <div class="tools">
+        <div>
+          <h3>Frontend</h3>
+          <div class="chips"><span class="chip">React</span><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">TanStack Query</span><span class="chip">Redux</span><span class="chip">Zustand</span><span class="chip">GraphQL</span><span class="chip">React Native</span></div>
+        </div>
+        <div>
+          <h3>UI and design systems</h3>
+          <div class="chips"><span class="chip">Storybook</span><span class="chip">Design tokens</span><span class="chip">Tailwind CSS</span><span class="chip">Material UI</span><span class="chip">Accessibility (WCAG)</span></div>
+        </div>
+        <div class="feature">
+          <h3>AI and developer tooling</h3>
+          <div class="chips"><span class="chip">Claude Code</span><span class="chip">Custom skills</span><span class="chip">MCP servers</span><span class="chip">AI code review</span></div>
+        </div>
+        <div>
+          <h3>Backend</h3>
+          <div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Redis</span><span class="chip">REST APIs</span><span class="chip">Socket.io</span></div>
+        </div>
+        <div>
+          <h3>Testing and quality</h3>
+          <div class="chips"><span class="chip">Jest</span><span class="chip">React Testing Library</span><span class="chip">ESLint</span><span class="chip">CI quality gates</span></div>
+        </div>
+        <div>
+          <h3>Delivery</h3>
+          <div class="chips"><span class="chip">AWS</span><span class="chip">Docker</span><span class="chip">CI/CD</span><span class="chip">Git</span><span class="chip">Jira</span></div>
+        </div>
+      </div>
+
+      <div class="edu">
+        <h3>Education</h3>
+        <p>B.Tech, Information Technology · Sri Krishna College of Engineering and Technology, 2017–2021</p>
+        <h3>Certifications</h3>
+        <p><a href="https://verify.skilljar.com/c/ts99iwn5ud8g" target="_blank" rel="noopener">Model Context Protocol: Advanced Topics</a> · Anthropic, 2026<br>
+        <a href="https://www.credly.com/badges/d00b0caa-20b0-4506-a6bf-f986e95949ac/public_url" target="_blank" rel="noopener">AWS Certified Cloud Practitioner</a> · Amazon Web Services</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <h2 id="contact-h">Looking for a frontend lead?</h2>
+      <p>I'm open to Frontend Lead and senior frontend roles. The quickest way to reach me is email.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:panayappan.dev@gmail.com">panayappan.dev@gmail.com</a>
+        <button class="btn" type="button" id="copyEmail">Copy email</button>
+        <a class="btn" href="https://www.linkedin.com/in/panayappanl" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-foot">
+  <span>© 2026 Panayappan L</span>
+  <a href="#top">Back to top</a>
+</footer>
+
+<!-- Command palette -->
+<div class="palette-backdrop" id="paletteBackdrop" aria-hidden="true">
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Quick navigation">
+    <input id="paletteInput" type="text" placeholder="Search sections, case studies or actions" autocomplete="off" aria-controls="paletteList" aria-activedescendant="">
+    <ul id="paletteList" role="listbox"></ul>
+    <div class="palette-foot"><span>↑ ↓ to move</span><span>Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var EMAIL = 'panayappan.dev@gmail.com';
+
+  /* ---------- Theme ---------- */
+  function currentTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function toggleTheme() {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    showToast(next === 'dark' ? 'Dark theme on' : 'Light theme on');
+  }
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+  /* ---------- Header border on scroll ---------- */
+  var head = document.querySelector('.site-head');
+  function onScroll() { head.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ---------- Toast ---------- */
+  var toastEl = document.getElementById('toast'), toastTimer;
+  function showToast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+  }
+
+  /* ---------- Copy email ---------- */
+  function copyEmail() {
+    function done() { showToast('Email copied'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = EMAIL; document.body.appendChild(ta);
+      ta.select(); try { document.execCommand('copy'); done(); } catch (e) { showToast(EMAIL); }
+      document.body.removeChild(ta);
+    }
+  }
+  document.getElementById('copyEmail').addEventListener('click', copyEmail);
+
+  /* Email links: open the mail app, and also copy the address as a fallback
+     for visitors who don't have a mail app set up */
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(EMAIL).then(function () {
+          showToast('Email address copied: ' + EMAIL);
+        }, function () {});
+      }
+    });
+  });
+
+  /* Back to top */
+  document.querySelectorAll('a[href="#top"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      history.replaceState(null, '', location.pathname + location.search);
+    });
+  });
+
+  /* ---------- Command palette ---------- */
+  var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  document.getElementById('kbdHint').textContent = isMac ? '⌘K' : 'Ctrl K';
+
+  function goTo(id, openCase) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (openCase && el.tagName === 'DETAILS') el.open = true;
+    el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  }
+  var commands = [
+    { label: 'Recent results', hint: 'Section', run: function () { goTo('results'); } },
+    { label: 'What I own', hint: 'Section', run: function () { goTo('own'); } },
+    { label: 'Case studies', hint: 'Section', run: function () { goTo('work'); } },
+    { label: 'Standards in a 120K-line codebase', hint: 'Case study', run: function () { goTo('case-architecture', true); } },
+    { label: 'Design system from zero', hint: 'Case study', run: function () { goTo('case-design-system', true); } },
+    { label: 'Domain knowledge through MCP', hint: 'Case study', run: function () { goTo('case-mcp', true); } },
+    { label: 'Redux to TanStack Query', hint: 'Case study', run: function () { goTo('case-data', true); } },
+    { label: 'APIs at peak traffic', hint: 'Case study', run: function () { goTo('case-traffic', true); } },
+    { label: 'How I lead', hint: 'Section', run: function () { goTo('leading'); } },
+    { label: 'Experience', hint: 'Section', run: function () { goTo('experience'); } },
+    { label: 'Toolbox', hint: 'Section', run: function () { goTo('toolbox'); } },
+    { label: 'Contact', hint: 'Section', run: function () { goTo('contact'); } },
+    { label: 'Copy email address', hint: 'Action', run: copyEmail },
+    { label: 'Download resume', hint: 'Action', run: function () { var l = document.createElement('a'); l.href = 'resume.pdf'; l.download = 'Panayappan-L-Resume.pdf'; document.body.appendChild(l); l.click(); l.remove(); } },
+    { label: 'Switch theme', hint: 'Action', run: toggleTheme },
+    { label: 'Open LinkedIn', hint: 'Link', run: function () { window.open('https://www.linkedin.com/in/panayappanl', '_blank', 'noopener'); } },
+    { label: 'Open GitHub', hint: 'Link', run: function () { window.open('https://github.com/panayappanl', '_blank', 'noopener'); } }
+  ];
+
+  var backdrop = document.getElementById('paletteBackdrop');
+  var input = document.getElementById('paletteInput');
+  var list = document.getElementById('paletteList');
+  var filtered = commands.slice(), active = 0, lastFocus = null;
+
+  function render() {
+    list.innerHTML = '';
+    if (!filtered.length) {
+      var li = document.createElement('li'); li.className = 'empty'; li.textContent = 'No matches. Try "design", "MCP" or "contact".';
+      list.appendChild(li); input.setAttribute('aria-activedescendant', ''); return;
+    }
+    filtered.forEach(function (c, i) {
+      var li = document.createElement('li');
+      li.id = 'cmd-' + i; li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', i === active ? 'true' : 'false');
+      li.innerHTML = '<div></div><span></span>';
+      li.firstChild.textContent = c.label; li.lastChild.textContent = c.hint;
+      li.addEventListener('mousemove', function () { if (active !== i) { active = i; render(); } });
+      li.addEventListener('click', function () { runCommand(i); });
+      list.appendChild(li);
+    });
+    input.setAttribute('aria-activedescendant', 'cmd-' + active);
+    var sel = document.getElementById('cmd-' + active);
+    if (sel) sel.scrollIntoView({ block: 'nearest' });
+  }
+  function filter() {
+    var q = input.value.trim().toLowerCase();
+    filtered = commands.filter(function (c) { return (c.label + ' ' + c.hint).toLowerCase().indexOf(q) !== -1; });
+    active = 0; render();
+  }
+  function openPalette() {
+    lastFocus = document.activeElement;
+    backdrop.classList.add('open'); backdrop.setAttribute('aria-hidden', 'false');
+    input.value = ''; filter(); setTimeout(function () { input.focus(); }, 10);
+  }
+  function closePalette() {
+    backdrop.classList.remove('open'); backdrop.setAttribute('aria-hidden', 'true');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function runCommand(i) { var c = filtered[i]; closePalette(); if (c) setTimeout(c.run, 30); }
+
+  document.getElementById('openPalette').addEventListener('click', openPalette);
+  input.addEventListener('input', filter);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (filtered.length) { active = (active + 1) % filtered.length; render(); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (filtered.length) { active = (active - 1 + filtered.length) % filtered.length; render(); } }
+    else if (e.key === 'Enter') { e.preventDefault(); if (filtered.length) runCommand(active); }
+    else if (e.key === 'Tab') { e.preventDefault(); }
+  });
+  backdrop.addEventListener('mousedown', function (e) { if (e.target === backdrop) closePalette(); });
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault(); backdrop.classList.contains('open') ? closePalette() : openPalette();
+    } else if (e.key === 'Escape' && backdrop.classList.contains('open')) { closePalette(); }
+  });
+})();
+</script>
+</body>
+</html>
